@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Six Species of Page — Structured Content Archetype Clustering | FlyRank ML Internship</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDF0F2;
+    --paper-warm:#E6E9EA;
+    --ink:#1B2430;
+    --ink-soft:#4B5766;
+    --line:#C9D0D6;
+    --card:#FFFFFF;
+    --protect:#2F7566;
+    --improve:#B4502A;
+    --rewrite:#C98A2C;
+    --monitor:#5B6B7A;
+    --prune:#8C3A46;
+    --investigate:#6C5B9E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.6;
+  }
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+  header.hero{
+    padding:96px 0 64px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:22px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:1px;background:var(--ink-soft);display:inline-block;
+  }
+  h1.title{
+    font-family:'Fraunces',serif;
+    font-optical-sizing:auto;
+    font-weight:600;
+    font-size:clamp(2.1rem,5vw,3.4rem);
+    line-height:1.08;
+    margin:0 0 20px;
+    letter-spacing:-.01em;
+  }
+  .subtitle{
+    font-size:1.14rem;
+    color:var(--ink-soft);
+    max-width:60ch;
+  }
+  .meta-row{
+    margin-top:36px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:28px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  .meta-row span b{color:var(--ink);font-weight:500;}
+
+  nav.toc{
+    padding:22px 0;
+    border-bottom:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+  nav.toc a{color:var(--ink-soft);text-decoration:none;margin-right:18px;white-space:nowrap;}
+  nav.toc a:hover{color:var(--ink);text-decoration:underline;}
+  .toc-scroll{overflow-x:auto;white-space:nowrap;padding-bottom:4px;}
+
+  section{
+    padding:56px 0;
+    border-bottom:1px solid var(--line);
+  }
+  section:last-of-type{border-bottom:none;}
+  .sec-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--improve);
+    margin-bottom:12px;
+  }
+  h2{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1.7rem;
+    margin:0 0 22px;
+    letter-spacing:-.01em;
+  }
+  h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1.2rem;
+    margin:32px 0 12px;
+  }
+  p{margin:0 0 16px;color:var(--ink);}
+  p.lede{font-size:1.08rem;}
+  ul,ol{padding-left:22px;}
+  li{margin-bottom:8px;}
+  strong{font-weight:600;}
+  a{color:var(--ink);}
+  code{
+    font-family:'IBM Plex Mono',monospace;
+    background:var(--paper-warm);
+    padding:1px 6px;
+    border-radius:4px;
+    font-size:.88em;
+  }
+  pre{
+    background:#20262E;
+    color:#E6E9EA;
+    padding:18px 20px;
+    border-radius:8px;
+    overflow-x:auto;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    line-height:1.55;
+  }
+  pre code{background:none;padding:0;color:inherit;}
+
+  .abstract-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:28px 30px;
+  }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:.92rem;
+    margin:18px 0 6px;
+  }
+  th,td{
+    text-align:left;
+    padding:10px 12px;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  th{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    color:var(--ink-soft);
+    font-weight:500;
+  }
+  .table-wrap{overflow-x:auto;}
+
+  figure{margin:26px 0;}
+  figure img{width:100%;border-radius:8px;border:1px solid var(--line);display:block;}
+  figcaption{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:10px;
+  }
+
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:16px;
+    margin:24px 0 8px;
+  }
+  .stat{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:18px 18px;
+  }
+  .stat .num{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1.7rem;
+    line-height:1;
+  }
+  .stat .label{
+    margin-top:6px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+  }
+
+  /* --- Signature element: archetype specimen grid --- */
+  .specimen-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+    margin:28px 0 8px;
+  }
+  @media (max-width:640px){.specimen-grid{grid-template-columns:1fr;}}
+  .specimen{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left-width:5px;
+    border-radius:8px;
+    padding:20px 20px 18px;
+    position:relative;
+  }
+  .specimen .idx{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+  }
+  .specimen h4{
+    font-family:'Fraunces',serif;
+    font-size:1.12rem;
+    font-weight:600;
+    margin:4px 0 8px;
+  }
+  .specimen .share-bar{
+    height:6px;
+    border-radius:3px;
+    background:var(--paper-warm);
+    margin:12px 0 10px;
+    overflow:hidden;
+  }
+  .specimen .share-fill{height:100%;border-radius:3px;}
+  .specimen .n{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+  .specimen p{font-size:.9rem;color:var(--ink-soft);margin:8px 0 12px;}
+  .action-tag{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:.03em;
+    padding:4px 10px;
+    border-radius:20px;
+    color:#fff;
+  }
+  .s-champions{border-left-color:var(--protect);} .s-champions .action-tag{background:var(--protect);} .s-champions .share-fill{background:var(--protect);}
+  .s-engagement{border-left-color:var(--improve);} .s-engagement .action-tag{background:var(--improve);} .s-engagement .share-fill{background:var(--improve);}
+  .s-stale{border-left-color:var(--rewrite);} .s-stale .action-tag{background:var(--rewrite);} .s-stale .share-fill{background:var(--rewrite);}
+  .s-weak{border-left-color:var(--monitor);} .s-weak .action-tag{background:var(--monitor);} .s-weak .share-fill{background:var(--monitor);}
+  .s-filler{border-left-color:var(--prune);} .s-filler .action-tag{background:var(--prune);} .s-filler .share-fill{background:var(--prune);}
+  .s-invisible{border-left-color:var(--investigate);} .s-invisible .action-tag{background:var(--investigate);} .s-invisible .share-fill{background:var(--investigate);}
+
+  .callout{
+    background:var(--paper-warm);
+    border-left:3px solid var(--ink-soft);
+    padding:16px 20px;
+    border-radius:0 8px 8px 0;
+    font-size:.94rem;
+    color:var(--ink-soft);
+    margin:20px 0;
+  }
+  .callout strong{color:var(--ink);}
+
+  footer{
+    padding:48px 0 80px;
+    color:var(--ink-soft);
+    font-size:.92rem;
+  }
+  footer a{color:var(--ink);}
+
+  ::selection{background:#C98A2C55;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">FlyRank ML Internship — Capstone — Structured Content Archetype Clustering</div>
+    <h1 class="title">Six species of page:<br>clustering 30,000 pages<br>into an action queue</h1>
+    <p class="subtitle lede">What performance archetypes exist across a real content inventory — and what should an editor actually <em>do</em> about each one, before the next review cycle?</p>
+    <div class="meta-row">
+      <span>Author: <b>Farhan</b></span>
+      <span>Lane: <b>Structured Content Archetype Clustering</b></span>
+      <span>Method: <b>KMeans (k=6) + PCA</b></span>
+      <span>Data: <b>30,000 pages · 32 clients</b></span>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <div class="toc-scroll">
+      <a href="#abstract">Abstract</a>
+      <a href="#intro">Introduction</a>
+      <a href="#data">Data</a>
+      <a href="#methodology">Methodology</a>
+      <a href="#results">Results</a>
+      <a href="#limitations">Limitations</a>
+      <a href="#recommendations">Recommendations</a>
+      <a href="#repro">Reproducibility</a>
+      <a href="#credit">Data credit</a>
+    </div>
+  </nav>
+
+  <section id="abstract">
+    <div class="sec-label">00 — Abstract</div>
+    <div class="abstract-card">
+      <p class="lede" style="margin:0;">Content teams reviewing hundreds or thousands of pages need a way to triage beyond "everything is a priority." This project clusters 30,000 anonymized FlyRank content pages into six performance archetypes using sixteen safe, current-state metrics — traffic, CTR, engagement, freshness, and content properties — with no article text and no client-identifying data anywhere in the pipeline. A KMeans model (<code>k=6</code>, chosen by silhouette score) produced groups that are moderately separated (silhouette ≈ 0.20) but highly reproducible under re-seeding and bootstrapping (Adjusted Rand Index mostly 0.80–1.00). Profiling each cluster's raw metrics <em>before</em> naming it surfaced six distinct archetypes, from "Champions" carrying the most traffic to "Invisible/Unindexed" pages with almost no search presence at all. The output is a ranked action queue — protect, improve, rewrite, monitor, merge, or prune — with "Engagement-Problem Pages" (26% of the inventory: high traffic, page-one position, but a 0.25% median click-through rate) as the top review priority.</p>
+    </div>
+  </section>
+
+  <section id="intro">
+    <div class="sec-label">01 — Introduction / Problem Statement</div>
+    <h2>The decision this supports</h2>
+    <p>A content team with a large, aging inventory can't manually eyeball every page against sixteen interacting metrics and decide what to do next. Somewhere in that inventory are pages worth protecting, pages worth rewriting, and pages worth quietly pruning — but sorted by publish date or raw traffic alone, those three categories look identical.</p>
+    <p>This capstone asks: <strong>what performance archetypes exist across the content inventory, and what action does each one call for?</strong> The output is not a single opaque priority score — it's a small set of named, inspected groups, each mapped to a concrete next step a content editor can take tomorrow: protect, improve, rewrite, merge, prune, or monitor.</p>
+    <p>A wrong call here is <em>recoverable</em> — a page routed to "monitor" instead of "improve" loses a review cycle, not revenue directly — which is exactly why this output is built as decision support for a human reviewer, not an automated trigger.</p>
+  </section>
+
+  <section id="data">
+    <div class="sec-label">02 — Data</div>
+    <h2>What went in, what stayed out</h2>
+    <p>This analysis uses the anonymized starter release only — <code>content_refresh_anonymized.csv</code>, 30,000 pages across 32 pseudonymized clients, every metric aggregated over a trailing 90-day window. The full ~79M-row warehouse release was not pulled for this pass.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="num">30,000</div><div class="label">pages</div></div>
+      <div class="stat"><div class="num">32</div><div class="label">pseudonymized clients</div></div>
+      <div class="stat"><div class="num">90d</div><div class="label">trailing window</div></div>
+      <div class="stat"><div class="num">16</div><div class="label">features used</div></div>
+    </div>
+    <h3>Excluded, and why</h3>
+    <ul>
+      <li><code>trend_direction</code>, <code>trend_pct</code> — the data dictionary defines these as the label source for a different (predictive) task; used here only afterward, to <em>describe</em> a cluster's decline mix, never as a clustering input.</li>
+      <li><code>content_id</code>, <code>client_id</code> — pseudonymous identifiers, used only for counting and grouping, never as features.</li>
+      <li><code>provider_used</code>, <code>model_used</code> — flagged "not a model feature" in the data dictionary.</li>
+      <li>No raw URLs, keyword text, or client names exist in this slice, and none appear anywhere in this write-up or its source notebook.</li>
+    </ul>
+    <div class="callout"><strong>Missingness is patterned, not random.</strong> Word count and character count are missing specifically for <code>keyword article</code> rows; search volume, competition, and CPC are missing whenever a page has no keyword context (100% of <code>feedly article</code> rows). Rather than a blind zero-fill — which would silently encode content type into the clustering — each affected metric carries an explicit <em>"had data"</em> indicator alongside a median-imputed value.</div>
+  </section>
+
+  <section id="methodology">
+    <div class="sec-label">03 — Methodology</div>
+    <h2>Scale, cluster, check before you trust it</h2>
+    <p>Sixteen features — log-scaled traffic totals, click-through and engagement rates, average position (with an explicit "has position data" flag, since a position of <code>0</code> means <em>no data</em>, not first place), content age, freshness, word count, and search volume — are standardized and fed to KMeans. The number of clusters, <code>k</code>, is chosen from a silhouette-score grid across <code>k=3</code> to <code>8</code>, not assumed in advance.</p>
+    <figure>
+      <img src="assets/k_selection.png" alt="Silhouette score across candidate values of k, peaking at k=6">
+      <figcaption>Fig. 1 — Silhouette score by candidate k. k=6 is the peak of the grid (0.1985), not a round-number default.</figcaption>
+    </figure>
+    <h3>Stability, checked two ways</h3>
+    <p>Before trusting any cluster boundary, the fit was re-run with five different random seeds and on five bootstrap resamples of the data, each compared back to the original assignment with Adjusted Rand Index (1.0 = identical grouping, 0.0 = random agreement).</p>
+    <div class="table-wrap">
+    <table>
+      <tr><th>Check</th><th>ARI range</th><th>Reading</th></tr>
+      <tr><td>Re-seeding (5 seeds)</td><td>0.845 – 0.997</td><td>Same six regions keep reappearing</td></tr>
+      <tr><td>Bootstrap resampling (5 resamples)</td><td>0.798 – 0.990</td><td>Not an artifact of one particular sample</td></tr>
+    </table>
+    </div>
+    <p>PCA is used only to project the sixteen-dimensional feature space into two dimensions for visualization — it plays no role in the clustering itself, which runs on the full standardized feature set.</p>
+  </section>
+
+  <section id="results">
+    <div class="sec-label">04 — Results</div>
+    <h2>Model vs. the naive baseline, on the same data</h2>
+    <p>Clustering is unsupervised, so there's no accuracy number to beat — the fair comparison is against the single flat rule an editor already has: <em>"review anything with zero clicks."</em> That rule would flag five of the six archetypes below indiscriminately; it can't distinguish a page with no clicks because of no demand, staleness, lack of indexing, or aggregator filler — which is precisely the distinction the archetypes make.</p>
+
+    <figure>
+      <img src="assets/pca_clusters.png" alt="PCA scatter plot showing six colored clusters of content pages">
+      <figcaption>Fig. 2 — Six archetypes projected onto two principal components (≈33% of feature variance retained — a projection for shape, not the clustering method itself).</figcaption>
+    </figure>
+
+    <h3>The six archetypes</h3>
+    <p>Named only after reading each cluster's median metrics — never before.</p>
+
+    <div class="specimen-grid">
+      <div class="specimen s-champions">
+        <div class="idx">Cluster 5 · 4.2% of inventory</div>
+        <h4>Champions <span style="font-weight:400;color:var(--ink-soft);">(refresh risk)</span></h4>
+        <div class="n">1,270 pages</div>
+        <div class="share-bar"><div class="share-fill" style="width:4.2%"></div></div>
+        <p>Highest impressions and sessions, longest content, the only cluster with meaningful AI-referral traffic — but the highest median gap since last update (~104 days vs. ~20–25 elsewhere).</p>
+        <span class="action-tag">Protect + monitor freshness</span>
+      </div>
+      <div class="specimen s-engagement">
+        <div class="idx">Cluster 2 · 26.2% of inventory</div>
+        <h4>Engagement-Problem Pages</h4>
+        <div class="n">7,866 pages</div>
+        <div class="share-bar"><div class="share-fill" style="width:26.2%"></div></div>
+        <p>High impressions, page-one position — but a 0.25% median CTR and 1.7% engagement rate relative to that volume. The single largest pool of visible traffic being under-captured.</p>
+        <span class="action-tag">Improve metadata / CTR</span>
+      </div>
+      <div class="specimen s-stale">
+        <div class="idx">Cluster 1 · 22.6% of inventory</div>
+        <h4>Stale Visible Pages</h4>
+        <div class="n">6,773 pages</div>
+        <div class="share-bar"><div class="share-fill" style="width:22.6%"></div></div>
+        <p>Oldest median content age (~441 days), moderate impressions, page-two position, essentially zero measured clicks or engagement.</p>
+        <span class="action-tag">Rewrite / refresh</span>
+      </div>
+      <div class="specimen s-weak">
+        <div class="idx">Cluster 3 · 37.7% of inventory</div>
+        <h4>Weak / No-Demand Pages</h4>
+        <div class="n">11,295 pages</div>
+        <div class="share-bar"><div class="share-fill" style="width:37.7%"></div></div>
+        <p>The largest single archetype. Youngest median age, low impressions, near-zero engagement, low search volume behind the target keyword.</p>
+        <span class="action-tag">Monitor / prune weakest tail</span>
+      </div>
+      <div class="specimen s-filler">
+        <div class="idx">Cluster 0 · 5.3% of inventory</div>
+        <h4>Aggregator Filler Pages</h4>
+        <div class="n">1,601 pages</div>
+        <div class="share-bar"><div class="share-fill" style="width:5.3%"></div></div>
+        <p>Dominated by feed-sourced content with zero search volume — no keyword target at all — and negligible traffic despite a decent average position.</p>
+        <span class="action-tag">Merge or prune</span>
+      </div>
+      <div class="specimen s-invisible">
+        <div class="idx">Cluster 4 · 4.0% of inventory</div>
+        <h4>Invisible / Unindexed Pages</h4>
+        <div class="n">1,195 pages</div>
+        <div class="share-bar"><div class="share-fill" style="width:4.0%"></div></div>
+        <p>Near-zero impressions, mostly no position data at all — and, tellingly, almost no decline or growth. Already sitting at the floor.</p>
+        <span class="action-tag">Investigate indexing / prune</span>
+      </div>
+    </div>
+
+    <figure>
+      <img src="assets/decline_by_archetype.png" alt="Bar chart of decline rate by archetype">
+      <figcaption>Fig. 3 — Share of pages currently declining, by archetype. No archetype's decline rate strays dramatically from the whole-dataset base rate of 54.2% — reported plainly rather than oversold.</figcaption>
+    </figure>
+  </section>
+
+  <section id="limitations">
+    <div class="sec-label">05 — Limitations & Honest Framing</div>
+    <h2>What this is, and what it isn't</h2>
+    <ul>
+      <li><strong>Clusters are a lens, not ground truth.</strong> A silhouette score of 0.1985 means these six groups sit on a continuum with soft boundaries — not six sharply separated species of page. The stability checks above confirm the <em>regions</em> reproduce, not that every boundary page is unambiguous.</li>
+      <li><strong>Metric clustering, not semantic clustering.</strong> No article text exists in this release, so "archetype" here means pages that behave alike on traffic and engagement metrics — never pages that mean the same thing. Calling this "semantic clustering" would claim something this data can't support.</li>
+      <li><strong>No causal claims.</strong> A page in "Stale Visible Pages" is <em>associated with</em> zero recent engagement, not <em>caused</em> to decline by its age. No experiment or causal design backs a stronger statement.</li>
+      <li><strong>Starter slice, not the full warehouse.</strong> This is 30,000 pages from 32 clients, not the ~79M-row release — archetype boundaries could shift at full scale, and this write-up doesn't claim otherwise.</li>
+      <li><strong>No cannibalization-risk or true "hidden gems" archetype emerged</strong> — the lane brief names both as possibilities, but this slice has no shared-keyword join across pages and no article text, so neither claim is defensible from what's actually here. That gap is itself a finding worth stating rather than hiding.</li>
+    </ul>
+  </section>
+
+  <section id="recommendations">
+    <div class="sec-label">06 — Ranked Recommendations</div>
+    <h2>Where an editor's hour goes furthest</h2>
+    <ol>
+      <li><strong>Engagement-Problem Pages (26.2%)</strong> — highest-leverage fix. Pages already have page-one visibility and real traffic; a metadata/CTR pass captures upside without new content production.</li>
+      <li><strong>Stale Visible Pages (22.6%)</strong> — rewrite candidates. Oldest content, page-two position, zero engagement; a refresh could plausibly move these toward page one.</li>
+      <li><strong>Champions (4.2%)</strong> — protect and watch the freshness clock. These carry the most traffic and the only meaningful AI-referral sessions, but the longest gap since a last update flags a refresh-risk window worth monitoring, not ignoring.</li>
+      <li><strong>Weak/No-Demand (37.7%), Aggregator Filler (5.3%), Invisible/Unindexed (4.0%)</strong> — lower priority for active rewriting. Review for pruning or merging; the underlying issue in each — no demand, no keyword target, or no index presence — usually isn't fixed by a content edit.</li>
+    </ol>
+    <div class="callout">Treat this as a first-pass triage lens, not a final verdict. Boundaries are soft even where groupings are stable — a page near a cluster edge deserves a human glance before any merge or prune decision.</div>
+  </section>
+
+  <section id="repro">
+    <div class="sec-label">07 — Reproducibility</div>
+    <h2>Run it yourself</h2>
+    <pre><code>git clone https://github.com/muhammadfarhan2157-source/flyrank-ml-internship.git
+cd flyrank-ml-internship
+pip install -r requirements.txt
+jupyter nbconvert --to notebook --execute work/notebooks/capstone.ipynb</code></pre>
+    <p>Random seed <code>42</code> throughout (StandardScaler is deterministic; KMeans and PCA seeded at 42, <code>n_init=10</code>). Committed receipts: <code>work/outputs/action_mapping.json</code>, <code>work/outputs/cluster_profile.json</code>, and every chart in <code>work/notebooks/figures/</code> — aggregated/derived outputs only, no raw per-row dataset committed.</p>
+    <p>Full write-up: <a href="https://github.com/muhammadfarhan2157-source/flyrank-ml-internship/blob/main/work/capstone_report.md">work/capstone_report.md</a> · Source notebook: <a href="https://github.com/muhammadfarhan2157-source/flyrank-ml-internship/blob/main/work/notebooks/capstone.ipynb">work/notebooks/capstone.ipynb</a></p>
+  </section>
+
+  <section id="credit" style="border-bottom:none;">
+    <div class="sec-label">08 — Acknowledgments & Data Credit</div>
+    <p>Built on the <a href="https://flyrank.ai" target="_blank" rel="noopener">FlyRank ML Internship dataset</a>.</p>
+  </section>
+
+  <footer>
+    <p>Structured Content Archetype Clustering — FlyRank ML Internship capstone, self-paced track. Observed / measured / directional / decision-support language throughout; no client-identifying details; no claim of causal or algorithmic effect.</p>
+  </footer>
+</div>
+
+</body>
+</html>
